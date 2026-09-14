@@ -27,20 +27,20 @@ export interface ReplayFixture {
     deadline_ms: number;
     headers: Record<string, string>;
   };
-  payload: (NormalizedReading & Record<string, unknown>) | { message: string } | null;
+  payload: Record<string, unknown> | null;
   expected: Record<string, unknown>;
 }
 
 export const FIXTURES: Record<string, ReplayFixture> = {
-  'T04-NORMAL-D1-A': normalD1A as ReplayFixture,
-  'T04-NORMAL-D1-B': normalD1B as ReplayFixture,
-  'T04-NORMAL-D2': normalD2 as ReplayFixture,
-  'T04-TIMEOUT': timeoutFixture as ReplayFixture,
-  'T04-AUTH-401': authFixture as ReplayFixture,
-  'T04-RATE-429': rateFixture as ReplayFixture,
-  'T04-OFFLINE': offlineFixture as ReplayFixture,
-  'T04-SCHEMA-BREAK': schemaBreakFixture as ReplayFixture,
-  'T04-RECOVER-D2': recoverD2 as ReplayFixture
+  'T04-NORMAL-D1-A': normalD1A as unknown as ReplayFixture,
+  'T04-NORMAL-D1-B': normalD1B as unknown as ReplayFixture,
+  'T04-NORMAL-D2': normalD2 as unknown as ReplayFixture,
+  'T04-TIMEOUT': timeoutFixture as unknown as ReplayFixture,
+  'T04-AUTH-401': authFixture as unknown as ReplayFixture,
+  'T04-RATE-429': rateFixture as unknown as ReplayFixture,
+  'T04-OFFLINE': offlineFixture as unknown as ReplayFixture,
+  'T04-SCHEMA-BREAK': schemaBreakFixture as unknown as ReplayFixture,
+  'T04-RECOVER-D2': recoverD2 as unknown as ReplayFixture
 };
 
 export const FIXTURE_IDS = Object.keys(FIXTURES);
@@ -67,7 +67,7 @@ export function runFixture(inputState: EvaluationState, fixtureId: string): Eval
   if (fixture.transport.status === 429) return applyError(inputState, 'rate_limit', meta);
   if (fixture.transport.status !== null && fixture.transport.status >= 200 && fixture.transport.status < 300) {
     try {
-      return applySuccessfulReading(inputState, fixture.payload as NormalizedReading, meta, 'demo');
+      return applySuccessfulReading(inputState, fixture.payload as unknown as NormalizedReading, meta, 'demo');
     } catch {
       return applyError(inputState, 'schema_error', meta);
     }
