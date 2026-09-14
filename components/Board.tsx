@@ -159,8 +159,10 @@ export default function Board() {
                 <td>
                   {row.normalized_value} {row.unit}
                 </td>
-                <td style={{ maxWidth: 220, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                  {row.reading.source_url}
+                <td style={{ maxWidth: 260, wordBreak: 'break-all' }}>
+                  <a href={row.reading.source_url} target="_blank" rel="noreferrer" style={{ color: 'inherit' }}>
+                    {row.reading.source_url}
+                  </a>
                 </td>
                 <td>{fmt(row.first_fetched_at)}</td>
                 <td>{fmt(row.last_fetched_at)}</td>
