@@ -73,7 +73,14 @@ export default function Board() {
         <div className="panel-title">
           <h2>오늘의 서울 기온</h2>
         </div>
-        {error ? <div className="error-note">{error}</div> : <p className="hint">불러오는 중…</p>}
+        {error ? (
+          <>
+            <div className="error-note">{error}</div>
+            <button onClick={load}>다시 불러오기</button>
+          </>
+        ) : (
+          <p className="hint">불러오는 중…</p>
+        )}
       </section>
     );
   }
