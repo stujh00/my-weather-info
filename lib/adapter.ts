@@ -129,10 +129,13 @@ function comparisonFor(rows: DailyRow[], current: DailyRow): Comparison {
     return { state: 'unit_mismatch', direction: null, magnitude: null, unit: null };
   }
   const signed = current.normalized_value - previous.normalized_value;
+  // 부동소수점 뺄셈 오차(예: 17.8 - 17.2 = 0.6000000000000014)를 없애기 위해
+  // 소수점 둘째 자리까지 반올림합니다.
+  const rounded = Math.round(Math.abs(signed) * 100) / 100;
   return {
     state: 'comparable',
     direction: signed > 0 ? 'increase' : signed < 0 ? 'decrease' : 'unchanged',
-    magnitude: Math.abs(signed),
+    magnitude: rounded,
     unit: current.unit
   };
 }
