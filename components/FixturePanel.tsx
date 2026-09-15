@@ -157,6 +157,9 @@ export default function FixturePanel() {
               <dt>저장된 값(마지막 정상값 포함)</dt>
               <dd>
                 {state.current_reading ? `${state.current_reading.normalized_value} ${state.current_reading.unit}` : '—'}
+                {state.status?.freshness === 'stale' && (
+                  <span className="badge old-value">오래된 값(마지막 정상값)</span>
+                )}
               </dd>
             </div>
             <div>
